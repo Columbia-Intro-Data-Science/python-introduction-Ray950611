@@ -1,0 +1,44 @@
+1) A count of all videos currently out: The output count is 183.
+
+SELECT COUNT(rental_date)-COUNT(return_date)
+FROM rental
+
+2£©How much do customers who have videos out owe:(output data saved as rental_owe.csv with 183 entries)
+
+SELECT rental.rental_id,
+       customer.first_name,
+       customer.last_name,
+       film.film_id,
+       film.rental_rate
+FROM (((rental
+       INNER JOIN customer ON customer.customer_id=rental.customer_id)
+       INNER JOIN inventory ON inventory.inventory_id=rental.inventory_id)
+       INNER JOIN film ON film.film_id=inventory.film_id)
+WHERE rental.rental_id IN
+    (SELECT rental_id
+     FROM rental
+     WHERE return_date IS NULL)
+
+3) Which users pays the most late due fee? 
+(output data saved as late_fee.csv with customers Karl Seal,Wesley Bull, June Carrol and Luois Leone being the persons paying the most late due fees at 15$)
+
+SELECT rental.customer_id,
+       customer.first_name,
+       customer.last_name,
+       SUM(DATE_PART('day', rental.return_date - rental.rental_date-INTERVAL '7 day'))
+FROM rental
+INNER JOIN customer ON customer.customer_id=rental.customer_id
+WHERE DATE_PART('day', rental.return_date - rental.rental_date)>7
+GROUP BY rental.customer_id,
+         customer.first_name,
+         customer.last_name
+ORDER BY SUM(DATE_PART('day', rental.return_date - rental.rental_date-INTERVAL '7 day')) DESC
+
+4)What hour of the day do people rent most? 
+(output data saved as rental_hour.csv with 24 entries for 24 hours ordered by total rentals, turns out people rent the most at 15:00-16:00)
+
+SELECT date_part('hour', rental_date),
+       count(date_part('hour', rental_date))
+FROM rental
+GROUP BY date_part('hour', rental_date)
+ORDER BY count(date_part('hour', rental_date)) DESC
