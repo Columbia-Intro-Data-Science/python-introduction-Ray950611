@@ -21,10 +21,10 @@ def nba():
         Teams = ['SAS','GSW','OKC','CLE','TOR','LAC','ATL','BOS','CHO','UTA','IND','MIA','POR','DET','HOU','DAL','WAS','CHI','ORL','MEM','SAC','DEN','NYK','NOP','MIN','MIL','PHO','BRK','LAL','PHI']
         #check input
         if season_input=='':
-            return "Error season input!"
+            return "Null season input!"
         season_input = int(season_input)
-        if season_input <2016:
-            return "Error season input!"
+        if season_input <2016 or season_input>2017:
+            return "Error season input!Not valid for app use."
         if team_name not in Teams:
             return "Error input team name!"
         #database
@@ -177,10 +177,10 @@ def nba():
     def game_predict(season_input,home_team,guest_team):
         #check input
         if season_input=='':
-            return "Error season input!"
+            return "Null season input!"
         season_input = int(season_input)
-        if season_input <2016:
-            return "Error season input!"
+        if season_input <2016 or season_input>2017:
+            return "Error season input!Not valid for app use."
         
         ###initialization
         TeamFull = ['San Antonio Spurs', 'Golden State Warriors', 'Oklahoma City Thunder', 'Cleveland Cavaliers', 'Toronto Raptors', 'Los Angeles Clippers', 'Atlanta Hawks', 'Boston Celtics', 'Charlotte Hornets', 'Utah Jazz', 'Indiana Pacers', 'Miami Heat', 'Portland Trail Blazers', 'Detroit Pistons', 'Houston Rockets', 'Dallas Mavericks', 'Washington Wizards', 'Chicago Bulls', 'Orlando Magic', 'Memphis Grizzlies', 'Sacramento Kings', 'Denver Nuggets', 'New York Knicks', 'New Orleans Pelicans', 'Minnesota Timberwolves', 'Milwaukee Bucks', 'Phoenix Suns', 'Brooklyn Nets', 'Los Angeles Lakers', 'Philadelphia 76ers']
@@ -349,10 +349,10 @@ def nba():
     main = Tk()
     main.title("My NBA Predictor")
     #entry boxes and text boxes
-    Label(main, text = "Game Prediction: Enter season(yyyy after 2016):").grid(row=4)
+    Label(main, text = "Game Prediction: Enter season(yyyy>2015,<current season):").grid(row=4)
     Label(main, text = "Enter Home Team Official Initial(all cap):").grid(row=5)
     Label(main, text = "Enter Guest Team Official Initial(all cap):").grid(row=6)
-    Label(main, text = "Seasonal Prediction: Enter season(yyyy after 2016):").grid(row=0)
+    Label(main, text = "Seasonal Prediction: Enter season(yyyy>2015,<current season):").grid(row=0)
     Label(main, text = "Enter Team Official Initial(all cap):").grid(row=1)
     t = Entry(main)
     year_s = Entry(main)
