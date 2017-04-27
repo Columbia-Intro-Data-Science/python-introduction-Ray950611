@@ -1,4 +1,4 @@
-The file nba_app_template.py sets up a web server that is allowed for access for all terminals that logs on to the IP address 160.39.139.34:5000.
+The file nba_app_template.py sets up a web server that is allowed for access for all terminals that logs on to the IP address 160.39.138.xx:5000 where xx is the host machine(server) address.
 To use it, first run the .py file on the remote server machine (or flask run -host 0.0.0.0) and keep it running, it should say :
 
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
