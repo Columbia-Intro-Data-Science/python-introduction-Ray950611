@@ -19,8 +19,14 @@ def nba():
     return template
 @app.route('/season/')
 def form_season():
+   Teams = ['SAS','GSW','OKC','CLE','TOR','LAC','ATL','BOS','CHO','UTA','IND','MIA','POR','DET','HOU','DAL','WAS','CHI','ORL','MEM','SAC','DEN','NYK','NOP','MIN','MIL','PHO','BRK','LAL','PHI']
    template = "<!doctype html><html><body><title>NBA Season Predictor</title><div align='center' style='border:2px solid red'><h1>Welcome to My NBA Season Predictor!</h1>"
-   template+= "<form action='/season_result/' method='post'> Team name(e.g. SAS):<br><input type='text' name='teamname'><br> Season(yyyy after 2015, no more than current season):<br><input type='text' name='season'><br><br><input type='submit' value='Submit'></form>"
+   template+= "<form action='/season_result/' method='post'> Team name(e.g. SAS):<br><select name='teamname'>"
+   #select tag
+   for team in Teams:
+       template+="<option value="+team+">"+team+"</option>"
+   #input text
+   template+="</select><br> Season(yyyy after 2015, no more than current season):<br><input type='text' name='season'><br><br><input type='submit' value='Submit'></form>"
    template+= "</div></body></html>"
    return template
 
@@ -165,14 +171,24 @@ def season_predict():
 
         predicted = sum(pred)/len(pred)
         Result= "Predicted Winning Ratio for "+team_name+":"+str(predicted)
-        template = "<!doctype html><html><body><title>Season Results</title><div align='center' style='border:2px solid red'><img src='/static/logos/"+team_name+".jpg' alt='Logo'style='width:300px;height:300px;''><h1>"+Result+"</h1><form action='/'><input type='submit' value='Home'></form></div></body></html>"
+        template = "<!doctype html><html><body><title>Season Results</title><div align='center' style='border:2px solid red'><img src='/static/logos/"+team_name+".jpg' alt='Logo'style='width:300px;height:300px;''>"
+        template+= "<h1>"+Result+"</h1><form action='/'><input type='submit' value='Home'></form></div></body></html>"
         return template
 
     ###########
 @app.route("/game/")
 def form_game():
+   Teams = ['SAS','GSW','OKC','CLE','TOR','LAC','ATL','BOS','CHO','UTA','IND','MIA','POR','DET','HOU','DAL','WAS','CHI','ORL','MEM','SAC','DEN','NYK','NOP','MIN','MIL','PHO','BRK','LAL','PHI']
    template = "<!doctype html><html><body><title>NBA Game Predictor</title><div align='center' style='border:2px solid red'><h1>Welcome to My NBA Game Predictor!</h1>"
-   template+= "<form action='/game_result/' method='post'> Home Team name(e.g. SAS):<br><input type='text' name='homename'><br> Guest Team name(e.g. GSW):<br><input type='text' name='guestname'><br>Season(yyyy after 2015, no more than current season):<br><input type='text' name='season'><br><br><input type='submit' value='Submit'></form>"
+   template += "<form action='/game_result/' method='post'> Home Team name(e.g. SAS):<br><select name = 'homename'>"
+   #select home/guest tag
+   for team in Teams:
+       template+="<option value="+team+">"+team+"</option>"
+   template+="</select><br>Guest Team name(e.g. GSW):<br><select name = 'guestname'>"
+   for team in Teams:
+       template+="<option value="+team+">"+team+"</option>"
+    #input text
+   template+="</select><br>Season(yyyy after 2015, no more than current season):<br><input type='text' name='season'><br><br><input type='submit' value='Submit'></form>"
    template+= "</div></body></html>"
    return template
 @app.route('/game_result/',methods=['POST'])
